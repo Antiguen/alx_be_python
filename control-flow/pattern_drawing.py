@@ -1,11 +1,7 @@
-# This script uses nested loops (while for rows, for for columns)
-# to draw a square pattern of asterisks based on user input.
-
-# 1. Prompt User for Pattern Size (Simplifying input to satisfy checker)
 size = 0
 try:
-    # The task requires "Enter the size of the pattern:"
-    size_input = input("Enter the size of the pattern: ").strip()
+    # CRITICAL FIX: Removed .strip() and ensure exact prompt string
+    size_input = input("Enter the size of the pattern: ")
     size = int(size_input)
 except ValueError:
     # If input is not a number, size remains 0, drawing nothing.
