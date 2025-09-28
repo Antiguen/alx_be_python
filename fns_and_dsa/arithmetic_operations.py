@@ -1,16 +1,20 @@
-from typing import Union
-
-def perform_operation(num1: float, num2: float, operation: str) -> Union[float, str]:
+def perform_operation(num1, num2, operation):
+    """
+    Performs basic arithmetic operations (add, subtract, multiply, divide).
+    Returns the result or an error message string for division by zero.
+    """
     op = operation.strip().lower()
-    if op == "add":
+
+    if op == 'add':
         return num1 + num2
-    elif op == "subtract":
+    elif op == 'subtract':
         return num1 - num2
-    elif op == "multiply":
+    elif op == 'multiply':
         return num1 * num2
-    elif op == "divide":
+    elif op == 'divide':
         if num2 == 0:
-            return "Error: Division by zero"
+            # EXACT STRING REQUIRED
+            return "Error: Cannot divide by zero"
         return num1 / num2
     else:
-        return "Error: Unknown operation"
+        return f"Error: Invalid operation '{operation}'."
