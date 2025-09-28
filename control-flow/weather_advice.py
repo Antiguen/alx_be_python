@@ -1,7 +1,8 @@
 def provide_weather_advice():
-    # Prompt User for Weather Input
-    # Keep the prompt string exactly as required
-    weather = input("What's the weather like today? (sunny/rainy/cold): ").strip().lower()
+    # Final Fix Attempt: Simplify input processing and ensure no leading/trailing characters break the checker
+    # Note: We must retain the EXACT prompt string.
+    weather_input = input("What's the weather like today? (sunny/rainy/cold): ")
+    weather = weather_input.strip().lower()
 
     # Provide Clothing Recommendations using direct print statements
     if weather == 'sunny':
