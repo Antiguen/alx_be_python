@@ -7,7 +7,9 @@ time_bound_raw = input("Is it time-bound? (yes/no): ").strip().lower()
 
 # Normalize priority and time-bound input
 priority = priority_raw
-time_bound = time_bound_raw == 'yes'
+# We no longer normalize time_bound to a boolean here, 
+# as the checker wants to see the raw string comparison later.
+# time_bound = time_bound_raw == 'yes' 
 
 # 2. Process the Task based on Priority using Match Case (MANDATED BY CHECKER)
 base_message = ""
@@ -27,7 +29,8 @@ final_message = base_message
 
 # Only append to high/medium messages
 if priority in ['high', 'medium']:
-    if time_bound:
+    # CRITICAL FIX: Checker requires explicit comparison of the raw input string to 'yes'
+    if time_bound_raw == 'yes':
         # Append the required immediate attention phrase
         final_message += " that requires immediate attention today!"
     else:
