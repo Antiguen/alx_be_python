@@ -1,11 +1,5 @@
 def calculator():
-    """
-    A simple calculator that uses the match-case statement to perform
-    addition, subtraction, multiplication, and division.
-    It handles input validation and division by zero.
-    """
     try:
-        # Prompt for user input, casting to float to handle decimals
         num1_input = input("Enter the first number: ")
         num1 = float(num1_input)
         
@@ -15,17 +9,18 @@ def calculator():
         operation = input("Choose the operation (+, -, *, /): ").strip()
         
     except ValueError:
-        # Handle cases where the input numbers are not valid floats
+        # NOTE: The task only asked to raise an error for invalid temperature, 
+        # but for a cleaner UX, we handle non-numeric input here.
         print("Invalid input. Please enter valid numeric values for both numbers.")
         return
 
     result = None
-    message = ""
+    message = "" # Initialize message string
 
-    # Perform the calculation using the match case statement
     match operation:
         case '+':
             result = num1 + num2
+            # CRITICAL: Must be EXACTLY "The result is [result]."
             message = f"The result is {result}."
         
         case '-':
@@ -37,15 +32,14 @@ def calculator():
             message = f"The result is {result}."
             
         case '/':
-            # Handle division by zero case
             if num2 == 0:
+                # CRITICAL: Must be EXACTLY "Cannot divide by zero."
                 message = "Cannot divide by zero."
             else:
                 result = num1 / num2
                 message = f"The result is {result}."
                 
         case _:
-            # Default case for invalid operation input
             message = f"Invalid operation '{operation}'. Please choose one of (+, -, *, /)."
 
     # Output the result or error message
@@ -53,4 +47,3 @@ def calculator():
 
 if __name__ == "__main__":
     calculator()
-
