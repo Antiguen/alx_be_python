@@ -2,7 +2,8 @@ while True:
     try:
         # Prompt user and save in variable 'number'
         number_input = input("Enter a number to see its multiplication table: ")
-        number = float(number_input) # Use float to handle any numeric input, but calculation will be integer-based
+        # Using int() here handles the requirement for multiplication table calculation
+        number = int(number_input) 
         break
     except ValueError:
         print("Invalid input. Please enter a valid number.")
@@ -13,6 +14,7 @@ for i in range(1, 11):
     # Calculate the product
     product = number * i
     
-    # Print each line in the required format: "X * Y = Z"
-    # We use int(number) for cleaner output, but retain float logic above for robust input.
-    print(f"{int(number)} * {i} = {int(product)}")
+    # CRITICAL FIX: Print each line in the required format: "X * Y = Z"
+    # Using simple concatenation/format to guarantee the exact output string.
+    print(f"{number} * {i} = {product}")
+
