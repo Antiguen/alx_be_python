@@ -1,22 +1,28 @@
 def calculator():
+    """
+    A simple calculator that uses the match-case statement to perform
+    addition, subtraction, multiplication, and division.
+    It handles division by zero.
+    """
+    
+    # Read inputs as strings first
+    num1_str = input("Enter the first number: ")
+    num2_str = input("Enter the second number: ")
+    operation = input("Choose the operation (+, -, *, /): ").strip()
+    
     try:
-        num1_input = input("Enter the first number: ")
-        num1 = float(num1_input)
-        
-        num2_input = input("Enter the second number: ")
-        num2 = float(num2_input)
-        
-        operation = input("Choose the operation (+, -, *, /): ").strip()
-        
+        # Convert to float immediately before use in calculation
+        num1 = float(num1_str)
+        num2 = float(num2_str)
     except ValueError:
-        # NOTE: The task only asked to raise an error for invalid temperature, 
-        # but for a cleaner UX, we handle non-numeric input here.
-        print("Invalid input. Please enter valid numeric values for both numbers.")
+        # Gracefully handle non-numeric input
+        print("Invalid number input. Please enter numeric values.")
         return
 
     result = None
-    message = "" # Initialize message string
+    message = ""
 
+    # Perform the calculation using the match case statement
     match operation:
         case '+':
             result = num1 + num2
@@ -32,14 +38,16 @@ def calculator():
             message = f"The result is {result}."
             
         case '/':
+            # CRITICAL: Handle division by zero case
             if num2 == 0:
-                # CRITICAL: Must be EXACTLY "Cannot divide by zero."
+                # Must match task example exactly, including the period
                 message = "Cannot divide by zero."
             else:
                 result = num1 / num2
                 message = f"The result is {result}."
                 
         case _:
+            # Default case for invalid operation input
             message = f"Invalid operation '{operation}'. Please choose one of (+, -, *, /)."
 
     # Output the result or error message
