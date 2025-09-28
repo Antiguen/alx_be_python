@@ -1,42 +1,35 @@
-# This script uses Match Case and conditional statements to create a personalized task reminder.
-
 # 1. Prompt for User Input
 task = input("Enter your task: ").strip()
 priority_raw = input("Priority (high/medium/low): ").strip().lower()
 time_bound_raw = input("Is it time-bound? (yes/no): ").strip().lower()
 
-# Normalize priority and time-bound input
 priority = priority_raw
-# We no longer normalize time_bound to a boolean here, 
-# as the checker wants to see the raw string comparison later.
-# time_bound = time_bound_raw == 'yes' 
+time_bound_yes = time_bound_raw == 'yes' # Use boolean for cleaner final logic
 
 # 2. Process the Task based on Priority using Match Case (MANDATED BY CHECKER)
-base_message = ""
+final_message = ""
 
 match priority:
     case 'high':
-        base_message = f"'{task}' is a high priority task"
+        if time_bound_yes:
+            # High Priority, Time-bound
+            final_message = f"'{task}' is a high priority task that requires immediate attention today!"
+        else:
+            # High Priority, Not Time-bound
+            final_message = f"'{task}' is a high priority task."
     case 'medium':
-        base_message = f"'{task}' is a medium priority task"
+        if time_bound_yes:
+            # Medium Priority, Time-bound
+            final_message = f"'{task}' is a medium priority task that requires immediate attention today!"
+        else:
+            # Medium Priority, Not Time-bound
+            final_message = f"'{task}' is a medium priority task."
     case 'low':
-        base_message = f"Note: '{task}' is a low priority task. Consider completing it when you have free time."
+        # Low Priority (Not affected by time-bound status)
+        final_message = f"Note: '{task}' is a low priority task. Consider completing it when you have free time."
     case _:
-        base_message = f"'{task}' has an unknown priority ('{priority_raw}')."
+        # Handles invalid priority input
+        final_message = f"'{task}' has an unknown priority ('{priority_raw}')."
 
-# 3. Use an if statement to modify the reminder based on time sensitivity
-final_message = base_message
-
-# Only append to high/medium messages
-if priority in ['high', 'medium']:
-    # CRITICAL FIX: Checker requires explicit comparison of the raw input string to 'yes'
-    if time_bound_raw == 'yes':
-        # Append the required immediate attention phrase
-        final_message += " that requires immediate attention today!"
-    else:
-        # Finalize the non-time-bound high/medium reminder with a period
-        final_message += "."
-
-# 4. Output the Final Reminder
+# 3. Output the Final Reminder
 print(final_message)
-
