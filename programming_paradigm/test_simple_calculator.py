@@ -1,4 +1,4 @@
-# test_simple_calculator.py
+# test_simple_calculator.py (Revised for maximum coverage)
 
 import unittest
 from simple_calculator import SimpleCalculator
@@ -8,66 +8,48 @@ class TestSimpleCalculator(unittest.TestCase):
 
     def setUp(self):
         """Set up the SimpleCalculator instance before each test."""
-        # This is executed before every single test_ method
         self.calc = SimpleCalculator()
 
     # --- Test Addition (add) ---
-    def test_addition_positive(self):
-        """Test addition with two positive numbers."""
-        self.assertEqual(self.calc.add(10, 5), 15)
-
-    def test_addition_negative(self):
-        """Test addition with positive and negative numbers."""
-        self.assertEqual(self.calc.add(-10, 5), -5)
-        self.assertEqual(self.calc.add(-10, -5), -15)
-
-    def test_addition_floats(self):
-        """Test addition with floating-point numbers."""
-        # Use round() for floating point checks to prevent precision errors
-        self.assertAlmostEqual(self.calc.add(2.5, 3.5), 6.0)
+    def test_addition_cases(self):
+        """Test addition with positive, negative, and zero inputs."""
+        self.assertEqual(self.calc.add(2, 3), 5, "Should be 5 (Pos + Pos)")
+        self.assertEqual(self.calc.add(-10, 5), -5, "Should be -5 (Neg + Pos)")
+        self.assertEqual(self.calc.add(15, -5), 10, "Should be 10 (Pos + Neg)")
+        self.assertEqual(self.calc.add(-2, -8), -10, "Should be -10 (Neg + Neg)")
+        self.assertEqual(self.calc.add(0, 5), 5, "Should be 5 (Zero + Pos)")
+        self.assertAlmostEqual(self.calc.add(1.5, 2.5), 4.0, "Should be 4.0 (Floats)")
 
     # --- Test Subtraction (subtract) ---
-    def test_subtraction_positive(self):
-        """Test subtraction with positive numbers."""
-        self.assertEqual(self.calc.subtract(10, 5), 5)
-
-    def test_subtraction_negative(self):
-        """Test subtraction resulting in a negative number."""
-        self.assertEqual(self.calc.subtract(5, 10), -5)
-        self.assertEqual(self.calc.subtract(-10, -5), -5)
+    def test_subtraction_cases(self):
+        """Test subtraction with positive, negative, and mixed inputs."""
+        self.assertEqual(self.calc.subtract(10, 5), 5, "Should be 5 (Pos - Pos)")
+        self.assertEqual(self.calc.subtract(5, 10), -5, "Should be -5 (Smaller - Larger)")
+        self.assertEqual(self.calc.subtract(-10, 5), -15, "Should be -15 (Neg - Pos)")
+        self.assertEqual(self.calc.subtract(10, -5), 15, "Should be 15 (Pos - Neg)")
+        self.assertEqual(self.calc.subtract(-5, -5), 0, "Should be 0 (Neg - Neg)")
+        self.assertAlmostEqual(self.calc.subtract(5.5, 2.5), 3.0, "Should be 3.0 (Floats)")
 
     # --- Test Multiplication (multiply) ---
-    def test_multiplication_positive(self):
-        """Test multiplication with two positive numbers."""
-        self.assertEqual(self.calc.multiply(4, 5), 20)
-
-    def test_multiplication_zero(self):
-        """Test multiplication by zero."""
-        self.assertEqual(self.calc.multiply(100, 0), 0)
-
-    def test_multiplication_negative(self):
-        """Test multiplication with negative numbers."""
-        self.assertEqual(self.calc.multiply(-5, 5), -25)
-        self.assertEqual(self.calc.multiply(-5, -5), 25)
+    def test_multiplication_cases(self):
+        """Test multiplication with various integer and zero inputs."""
+        self.assertEqual(self.calc.multiply(4, 5), 20, "Should be 20 (Pos * Pos)")
+        self.assertEqual(self.calc.multiply(-4, 5), -20, "Should be -20 (Neg * Pos)")
+        self.assertEqual(self.calc.multiply(4, -5), -20, "Should be -20 (Pos * Neg)")
+        self.assertEqual(self.calc.multiply(-4, -5), 20, "Should be 20 (Neg * Neg)")
+        self.assertEqual(self.calc.multiply(100, 0), 0, "Should be 0 (Any * Zero)")
+        self.assertAlmostEqual(self.calc.multiply(2.5, 2), 5.0, "Should be 5.0 (Float * Int)")
 
     # --- Test Division (divide) ---
-    def test_division_normal(self):
-        """Test normal division resulting in an integer."""
-        self.assertEqual(self.calc.divide(10, 5), 2)
-
-    def test_division_float_result(self):
-        """Test division resulting in a float."""
-        self.assertEqual(self.calc.divide(10, 4), 2.5)
-
-    def test_division_by_zero(self):
-        """Test the edge case: division by zero, which should return None."""
-        self.assertIsNone(self.calc.divide(10, 0))
-
-    def test_division_zero_numerator(self):
-        """Test zero divided by any non-zero number."""
-        self.assertEqual(self.calc.divide(0, 5), 0)
+    def test_division_cases(self):
+        """Test normal division, zero inputs, and the division by zero edge case."""
+        self.assertEqual(self.calc.divide(10, 5), 2, "Should be 2 (Normal Int)")
+        self.assertEqual(self.calc.divide(10, 4), 2.5, "Should be 2.5 (Float Result)")
+        self.assertEqual(self.calc.divide(0, 5), 0, "Should be 0 (Zero Numerator)")
+        self.assertAlmostEqual(self.calc.divide(10, -2), -5.0, "Should be -5.0 (Negative result)")
+        self.assertIsNone(self.calc.divide(10, 0), "Should be None (Division by Zero)")
+        self.assertIsNone(self.calc.divide(0, 0), "Should be None (0 divided by 0)")
 
 
-# This allows the tests to run when the script is executed directly
 if __name__ == '__main__':
     unittest.main()
