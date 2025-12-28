@@ -1,18 +1,12 @@
-weather_input = input("What's the weather like today? (sunny/rainy/cold): ")
-weather = weather_input.strip().lower()
+# Ask the user about today's weather
+weather = input("What's the weather like today? (sunny/rainy/cold): ").lower()
 
-# Provide Clothing Recommendations using direct print statements
-if weather == 'sunny':
-    # Print MUST match EXACTLY
+# Provide clothing recommendation based on the input
+if weather == "sunny":
     print("Wear a t-shirt and sunglasses.")
-elif weather == 'rainy':
-    # Print MUST match EXACTLY
+elif weather == "rainy":
     print("Don't forget your umbrella and a raincoat.")
-elif weather == 'cold':
-    # Print MUST match EXACTLY
+elif weather == "cold":
     print("Make sure to wear a warm coat and a scarf.")
 else:
-    # Handle unexpected input with the else statement
-    # Print MUST match EXACTLY
     print("Sorry, I don't have recommendations for this weather.")
-
