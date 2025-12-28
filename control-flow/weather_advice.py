@@ -1,12 +1,24 @@
-# Ask the user about today's weather
-weather = input("What's the weather like today? (sunny/rainy/cold): ").lower()
+# Prompt user for task details
+task = input("Enter your task: ")
+priority = input("Priority (high/medium/low): ").lower()
+time_bound = input("Is it time-bound? (yes/no): ").lower()
 
-# Provide clothing recommendation based on the input
-if weather == "sunny":
-    print("Wear a t-shirt and sunglasses.")
-elif weather == "rainy":
-    print("Don't forget your umbrella and a raincoat.")
-elif weather == "cold":
-    print("Make sure to wear a warm coat and a scarf.")
+# Generate reminder based on priority using match-case
+match priority:
+    case "high":
+        message = f"'{task}' is a high priority task"
+    case "medium":
+        message = f"'{task}' is a medium priority task"
+    case "low":
+        message = f"'{task}' is a low priority task"
+    case _:
+        message = f"'{task}' has an unknown priority"
+
+# Add time sensitivity note if applicable
+if time_bound == "yes":
+    message += " that requires immediate attention today!"
 else:
-    print("Sorry, I don't have recommendations for this weather.")
+    message += ". Consider completing it when you have free time."
+
+# Final output in required format
+print(f"Reminder: {message}")
