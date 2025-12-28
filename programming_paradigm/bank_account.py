@@ -1,50 +1,47 @@
-# bank_account.py (Updated with Persistence)
-import json
-import os
+"""Simple BankAccount class for basic OOP practice.
+
+Provides deposit, withdraw and display_balance methods.
+"""
 
 class BankAccount:
-    FILE_PATH = "account_data.json" # File where the balance is saved
+	"""A very small bank account model.
 
-    def __init__(self, initial_balance=0):
-        # We start by trying to load the existing balance
-        self._account_balance = self._load_balance(initial_balance)
-    
-    def _load_balance(self, default_balance):
-        """Loads balance from file, or returns default if file doesn't exist."""
-        if os.path.exists(self.FILE_PATH):
-            try:
-                with open(self.FILE_PATH, 'r') as f:
-                    data = json.load(f)
-                    return data.get('balance', default_balance)
-            except (json.JSONDecodeError, KeyError):
-                # Handle corrupted or incomplete file
-                return default_balance
-        return default_balance
+	Attributes:
+		_balance (float): the current account balance (encapsulated).
+	"""
 
-    def _save_balance(self):
-        """Saves the current balance to the file."""
-        data = {'balance': self._account_balance}
-        with open(self.FILE_PATH, 'w') as f:
-            json.dump(data, f)
+	def __init__(self, initial_balance: float = 0.0):
+		"""Initialize the account with an optional starting balance.
 
-    def deposit(self, amount):
-        if amount > 0:
-            self._account_balance += amount
-            self._save_balance() # Save after change
-        else:
-            print("Deposit amount must be positive.")
+		Raises ValueError if initial_balance is negative.
+		"""
+		if initial_balance < 0:
+			raise ValueError("Initial balance cannot be negative.")
+		self._balance = float(initial_balance)
 
-    def withdraw(self, amount):
-        if amount <= 0:
-            print("Withdrawal amount must be positive.")
-            return False
-        
-        if self._account_balance >= amount:
-            self._account_balance -= amount
-            self._save_balance() # Save after change
-            return True
-        else:
-            return False
+	def deposit(self, amount: float) -> None:
+		"""Deposit a positive amount into the account.
 
-    def display_balance(self):
-        print(f"Current Balance: ${self._account_balance:.2f}")
+		Raises ValueError for non-positive amounts.
+		"""
+		if amount <= 0:
+			raise ValueError("Deposit amount must be positive.")
+		self._balance += float(amount)
+
+	def withdraw(self, amount: float) -> bool:
+		"""Attempt to withdraw amount from the account.
+
+		Returns True and deducts the amount when sufficient funds exist.
+		Returns False and leaves the balance unchanged otherwise.
+		Raises ValueError for non-positive amounts.
+		"""
+		if amount <= 0:
+			raise ValueError("Withdraw amount must be positive.")
+		if amount <= self._balance:
+			self._balance -= float(amount)
+			return True
+		return False
+
+	def display_balance(self) -> None:
+		"""Print the current balance in a user friendly format."""
+		print(f"Current Balance: ${self._balance:.2f}")
